@@ -6,7 +6,11 @@ public class PersistentManagerScript : MonoBehaviour
 
     public int Str;
     public int Agi;
+    public int Dex;
     public int Int;
+
+    public int Con;
+    public int Luck;
 
     private void Awake()
     {
