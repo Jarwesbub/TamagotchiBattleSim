@@ -22,9 +22,14 @@ public class StatsManager : MonoBehaviour
 
     public Text PlayerClass;
 
-    public GameObject Class1;
-    public GameObject Class2;
-    public GameObject Class3;
+    public GameObject PlayerClass1;
+    public GameObject PlayerClass2;
+    public GameObject PlayerClass3;
+
+    public GameObject TamaClass1;
+    public GameObject TamaClass2;
+    public GameObject TamaClass3;
+
 
     private void Update()
     {
@@ -58,29 +63,35 @@ public class StatsManager : MonoBehaviour
 
         if (PersistentManagerScript.Instance.PlayerClass == 1)
         {
-            Class1.SetActive(true);
+            PlayerClass1.SetActive(true);
+            TamaClass1.SetActive(true);
         }
         else
         {
-            Class1.SetActive(false);
+            PlayerClass1.SetActive(false);
+            TamaClass1.SetActive(false);
         }
 
         if (PersistentManagerScript.Instance.PlayerClass == 2)
         {
-            Class2.SetActive(true);
+            PlayerClass2.SetActive(true);
+            TamaClass2.SetActive(true);
         }
         else
         {
-            Class2.SetActive(false);
+            PlayerClass2.SetActive(false);
+            TamaClass2.SetActive(false);
         }
 
         if (PersistentManagerScript.Instance.PlayerClass == 3)
         {
-            Class3.SetActive(true);
+            PlayerClass3.SetActive(true);
+            TamaClass3.SetActive(true);
         }
         else
         {
-            Class3.SetActive(false);
+            PlayerClass3.SetActive(false);
+            TamaClass3.SetActive(false);
         }
 
 

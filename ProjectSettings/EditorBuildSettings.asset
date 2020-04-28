@@ -6,12 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ClassSelectScene.unity
-    guid: 102d000b41137c747a2f56146a60f10b
-  - enabled: 1
     path: Assets/Scenes/MainMenuScene.unity
     guid: 8fcfac0fdb39f5648bcc4591bc1293e0
   - enabled: 1
+    path: Assets/Scenes/ClassSelectScene.unity
+    guid: 102d000b41137c747a2f56146a60f10b
+  - enabled: 0
     path: Assets/Scenes/TamaMenuScene.unity
     guid: 6763ce58cb6a9fb47a5c0a31c7b4d5ad
   - enabled: 1
