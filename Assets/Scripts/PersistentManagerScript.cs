@@ -4,6 +4,11 @@ public class PersistentManagerScript : MonoBehaviour
 {
     public static PersistentManagerScript Instance { get; private set; }
 
+    // Variables for StatsManager script (This creates variables and keeps all values always reliable)
+
+    public int Lvl;
+    public int PlayerClass;
+
     public int Str;
     public int Agi;
     public int Dex;
