@@ -19,7 +19,10 @@ public class StatsController : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            PersistentManagerScript.Instance.Lvl += 1;
+
+                PersistentManagerScript.Instance.LvlGet = true;
+                PersistentManagerScript.Instance.Lvl += 1;
+            
 
         }
 
@@ -28,18 +31,21 @@ public class StatsController : MonoBehaviour
         if (Input.GetKeyDown("z"))
         {
             PersistentManagerScript.Instance.PlayerClass = 1;
-            
+            PersistentManagerScript.Instance.Lvl = 1;
+
         }
 
         if (Input.GetKeyDown("x"))
         {
             PersistentManagerScript.Instance.PlayerClass = 2;
+            PersistentManagerScript.Instance.Lvl = 1;
 
         }
 
         if (Input.GetKeyDown("c"))
         {
             PersistentManagerScript.Instance.PlayerClass = 3;
+            PersistentManagerScript.Instance.Lvl = 1;
 
         }
 

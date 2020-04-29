@@ -6,10 +6,12 @@ public class PersistentManagerScript : MonoBehaviour
 
     // Variables for StatsManager script (This creates variables and keeps all values always reliable)
 
-    public int Lvl;
+    public int Lvl; // Players current level
+    public bool LvlGet = false; //If player gets level true or false
     public int PlayerClass;
     public bool GameStart = true;
 
+    public int SkillPoints;
 
     public int Str;
     public int Agi;
@@ -18,6 +20,7 @@ public class PersistentManagerScript : MonoBehaviour
 
     public int Con;
     public int Luck;
+
 
     private void Awake()
     {

@@ -9,6 +9,8 @@ public class MenuManagerScript : MonoBehaviour
     public GameObject World1;
     public GameObject TamaMenu;
 
+    public GameObject SkillPointsMenu;
+
 
 
 
@@ -16,6 +18,7 @@ public class MenuManagerScript : MonoBehaviour
     {
         World1.SetActive(true);
         TamaMenu.SetActive(false);
+        SkillPointsMenu.SetActive(false);
         //SceneManager.LoadScene("TamaMenuScene");
         //PersistentManagerScript.Instance.Str++; //test add 1
 
@@ -25,9 +28,28 @@ public class MenuManagerScript : MonoBehaviour
         
         TamaMenu.SetActive(true);
         World1.SetActive(false);
+        SkillPointsMenu.SetActive(false);
 
         //SceneManager.LoadScene("World1Scene");
         //PersistentManagerScript.Instance.Str++; //test add 1
 
     }
+    public void GoToSkillPoints()
+    {
+
+            SkillPointsMenu.SetActive(true);
+            World1.SetActive(false);
+            TamaMenu.SetActive(false);
+
+    }
+
+
+
+    public void AddLevel()
+    {
+        PersistentManagerScript.Instance.LvlGet = true;
+        PersistentManagerScript.Instance.Lvl += 1;
+    }
+
+
 }
