@@ -8,6 +8,8 @@ public class PersistentManagerScript : MonoBehaviour
 
     public int Lvl;
     public int PlayerClass;
+    public bool GameStart = true;
+
 
     public int Str;
     public int Agi;
