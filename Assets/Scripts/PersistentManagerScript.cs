@@ -20,6 +20,7 @@ public class PersistentManagerScript : MonoBehaviour
 
     public int Con;
     public int Luck;
+    public int Wis;
 
 
     private void Awake()

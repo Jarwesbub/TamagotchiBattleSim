@@ -30,6 +30,7 @@ public class PSClass2 : MonoBehaviour
             PersistentManagerScript.Instance.Agi = 12;
             PersistentManagerScript.Instance.Int = 9;
             PersistentManagerScript.Instance.Luck = 10;
+            PersistentManagerScript.Instance.Wis = 10;
 
         }
 

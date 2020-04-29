@@ -14,6 +14,7 @@ public class StatsManager : MonoBehaviour
     public Text DexTxt; //Dexterity based attacks
     public Text AgiTxt; //Agility based attacks
     public Text IntTxt; //Intelligence based attacks
+    public Text WisTxt; //Wisdom
 
     // Basic stats
 
@@ -58,6 +59,9 @@ public class StatsManager : MonoBehaviour
 
         LuckTxt.text = PersistentManagerScript.Instance.Luck.ToString();
         LuckTxt.text = "Luck     " + LuckTxt.text;
+
+        WisTxt.text = PersistentManagerScript.Instance.Wis.ToString();
+        WisTxt.text = "Wis      " + WisTxt.text;
 
 
         PlayerClass.text = PersistentManagerScript.Instance.PlayerClass.ToString();

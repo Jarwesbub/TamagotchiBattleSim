@@ -204,6 +204,17 @@ public class SkillPointsController : MonoBehaviour
         }
 
     }
+
+    public void WisAdd()
+    {
+        if (SkillPoints >= 1) //if there is more than 0 skill points available
+        {
+            PersistentManagerScript.Instance.Wis += 1;
+            SkillPoints -= 1;
+        }
+
+    }
+
     /*
     PersistentManagerScript.Instance.Str = 10;
     PersistentManagerScript.Instance.Con = 9;
