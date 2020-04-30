@@ -27,22 +27,22 @@ public class StatsController : MonoBehaviour
         }
 
 
-        //Testing PlayerClasses from 1-3, using keys z,x,c
-        if (Input.GetKeyDown("z"))
+        //Testing PlayerClasses from 1-3
+        if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             PersistentManagerScript.Instance.PlayerClass = 1;
             PersistentManagerScript.Instance.Lvl = 1;
 
         }
 
-        if (Input.GetKeyDown("x"))
+        if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             PersistentManagerScript.Instance.PlayerClass = 2;
             PersistentManagerScript.Instance.Lvl = 1;
 
         }
 
-        if (Input.GetKeyDown("c"))
+        if (Input.GetKeyDown(KeyCode.Keypad3))
         {
             PersistentManagerScript.Instance.PlayerClass = 3;
             PersistentManagerScript.Instance.Lvl = 1;
