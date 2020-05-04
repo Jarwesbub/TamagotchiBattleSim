@@ -1,30 +1,71 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StatsController : MonoBehaviour
 {
+    //public int XPScreen;
+    //public bool EnemyTurn = false;
 
+    public GameObject FightXPScreen;
+    public GameObject PlayerTurn;
 
+    public GameObject CritHitObject;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        //PersistentManagerScript.Instance.Lvl
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (PersistentManagerScript.Instance.IsCritical == true)
         {
-
-                PersistentManagerScript.Instance.LvlGet = true;
-                PersistentManagerScript.Instance.Lvl += 1;
-            
+            CritHitObject.SetActive(true);
 
         }
+        if (PersistentManagerScript.Instance.IsCritical == false)
+        {
+            CritHitObject.SetActive(false);
+        }
+
+        //XPScreen = PersistentManagerScript.Instance.XPScreen;
+        //XPScreen = PersistentManagerScript.Instance.XPScreen;
+        //EnemyTurn = PersistentManagerScript.Instance.EnemyTurn;
+
+        if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.XPScreen == 0)
+        {
+            PlayerTurn.SetActive(true);
+
+        }
+        else
+        {
+            PlayerTurn.SetActive(false);
+
+        }
+
+
+        if (PersistentManagerScript.Instance.XPScreen == 1)
+        {
+            FightXPScreen.SetActive(true);   
+
+        }
+        else
+        {
+            FightXPScreen.SetActive(false);
+
+        }
+
+
+
+
+
+
+
+        /*
+        if (Input.GetKeyDown("space"))
+        {
+                PersistentManagerScript.Instance.LvlGet = true;
+                PersistentManagerScript.Instance.Lvl += 1;
+        }
+        */
 
 
         //Testing PlayerClasses from 1-3
@@ -48,6 +89,8 @@ public class StatsController : MonoBehaviour
             PersistentManagerScript.Instance.Lvl = 1;
 
         }
+        
 
     }
+    
 }
