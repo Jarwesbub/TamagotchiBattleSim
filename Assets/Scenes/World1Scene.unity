@@ -133,10 +133,10 @@ GameObject:
   m_Layer: 0
   m_Name: TamaMenu
   m_TagString: Untagged
-  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &10938438
 Transform:
   m_ObjectHideFlags: 0
@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 56503267}
   - component: {fileID: 56503266}
   m_Layer: 0
-  m_Name: Damage_btn
+  m_Name: Defense_btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6729,7 +6729,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Basic Damage
+  m_Text: Defense
 --- !u!222 &1220970659
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8759,7 +8759,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.6499939, y: -0.7800007}
   m_SizeDelta: {x: -10.947937, y: -16.047989}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -10460,7 +10460,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2039021583
 Transform:
   m_ObjectHideFlags: 0
