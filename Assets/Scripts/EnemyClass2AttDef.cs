@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyClass1AttDef : MonoBehaviour
+public class EnemyClass2AttDef : MonoBehaviour
 {
 
     public int EnLVL = 1;
@@ -23,7 +23,7 @@ public class EnemyClass1AttDef : MonoBehaviour
 
     public bool EnemyTurn; // Who is doing attack first -> false = player, true = enemy
 
-   
+
 
 
     //Player's stats
@@ -96,12 +96,12 @@ public class EnemyClass1AttDef : MonoBehaviour
 
         EnLVL = PersistentManagerScript.Instance.Lvl;
 
-        KeepValue = 0; 
-        KeepValue1 = 0; 
+        KeepValue = 0;
+        KeepValue1 = 0;
         KeepValue2 = 0;
         KeepValue3 = 0;
 
-        KeepEnStr = 0; 
+        KeepEnStr = 0;
         KeepEnDex = 0;
         KeepEnInt = 0;
 
@@ -144,7 +144,7 @@ public class EnemyClass1AttDef : MonoBehaviour
         EnLVL = PersistentManagerScript.Instance.Lvl;
 
         EnLVLTxt.text = EnLVL.ToString();
-        EnLVLTxt.text = ("Level ") + EnLVLTxt.text + ( " (Berserk)");
+        EnLVLTxt.text = ("Level ") + EnLVLTxt.text + (" (Berserk)");
 
     }
 
@@ -166,33 +166,33 @@ public class EnemyClass1AttDef : MonoBehaviour
         DmgTakenTxt.text = "-" + DmgTakenTxt.text;
     }
 
-/// <summary>
-/// -------------------------------------------------------------------------------------------------------------------
-/// </summary>
+    /// <summary>
+    /// -------------------------------------------------------------------------------------------------------------------
+    /// </summary>
 
     void Update()
     {
 
-        
+
 
         DrawEnStats();
 
 
-       if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.BasicAttack == true)
-            {
+        if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.BasicAttack == true)
+        {
 
             if (PersistentManagerScript.Instance.BasicAttack == true)
-                {
+            {
                 PersistentManagerScript.Instance.BasicAttack = false;
                 GetPlayerStats();
                 StartCoroutine(EnemyGetDamage1());
 
                 PersistentManagerScript.Instance.PlayerTurn = false;
             }
-       }
-        
+        }
 
-       if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.BasicDefense == true)
+
+        if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.BasicDefense == true)
         {
 
             if (PersistentManagerScript.Instance.BasicDefense == true)
@@ -224,7 +224,7 @@ public class EnemyClass1AttDef : MonoBehaviour
 
         if (EnHealth <= 0)
         {
-            
+
             StartCoroutine(EnemyDeath());
         }
 
@@ -297,10 +297,10 @@ public class EnemyClass1AttDef : MonoBehaviour
     }
     IEnumerator PlayerBasicDefense()
     {
-         // If Defense button is used -> Skip attack buff defense
-        
-            // Code added in EnemyBasicAttack()
-      yield return new WaitForSeconds(TurnEndTime);
+        // If Defense button is used -> Skip attack buff defense
+
+        // Code added in EnemyBasicAttack()
+        yield return new WaitForSeconds(TurnEndTime);
         {
             PlayerDefUP = true;
 
@@ -330,10 +330,10 @@ public class EnemyClass1AttDef : MonoBehaviour
                 CriticalHitClac();
 
 
-                if (STR >= EnCon)
+                if (STR >= EnCon * 2)
                 {
                     DmgCalc = EnHealth;
-                    EnHealth -= STR - EnCon;
+                    EnHealth -= STR - (EnCon * 2);
 
                     PlayerDamageDone();
                     yield return new WaitForSeconds(DmgCalcTime);
@@ -353,10 +353,10 @@ public class EnemyClass1AttDef : MonoBehaviour
                 CriticalHitClac();
 
 
-                if (DEX >= (EnCon * 2)) // Con buff (advantage)
+                if (DEX >= (EnCon)) // Con buff (advantage)
                 {
                     DmgCalc = EnHealth;
-                    EnHealth -= DEX - (EnCon * 2);
+                    EnHealth -= DEX - (EnCon);
                     PlayerDamageDone();
                     yield return new WaitForSeconds(DmgCalcTime);
                     DmgDoneTxt.text = " ";
@@ -375,10 +375,10 @@ public class EnemyClass1AttDef : MonoBehaviour
                 CriticalHitClac();
 
 
-                if (INT >= (EnCon / 2)) // Con nerf (disadvantage)
+                if (INT >= (EnCon * 2)) // Con nerf (disadvantage)
                 {
                     DmgCalc = EnHealth;
-                    EnHealth -= INT - (EnCon / 2);
+                    EnHealth -= INT - (EnCon * 2);
                     PlayerDamageDone();
                     yield return new WaitForSeconds(DmgCalcTime);
                     DmgDoneTxt.text = " ";
@@ -419,15 +419,17 @@ public class EnemyClass1AttDef : MonoBehaviour
         }
 
 
-            if (EnHealth >= 0)
-            {
+        if (EnHealth >= 0)
+        {
             yield return new WaitForSeconds(TurnStartTime);
-           
+
 
 
             if (PlayerClass == 1)
             {
                 KeepValue = CON;
+
+                CON *= 2;
 
                 {
                     if (EnStr >= CON)
@@ -456,8 +458,8 @@ public class EnemyClass1AttDef : MonoBehaviour
             if (PlayerClass == 2)
             {
                 KeepValue = CON;
- 
-                CON /= 2;
+  
+                
 
                 if (EnStr >= CON)
                 {
@@ -485,7 +487,7 @@ public class EnemyClass1AttDef : MonoBehaviour
             if (PlayerClass == 3)
             {
                 KeepValue = CON;
-  
+
                 CON *= 2;
 
                 if (EnStr >= CON)
@@ -538,3 +540,4 @@ public class EnemyClass1AttDef : MonoBehaviour
 
 
 }
+
