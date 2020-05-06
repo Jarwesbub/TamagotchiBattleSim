@@ -42,6 +42,11 @@ public class EnemyClass3AttDef : MonoBehaviour
     int KeepEnInt;
 
 
+    int STRBuff, STRNerf, DEXBuff, DEXNerf, INTBuff, INTNerf; // Stats buff/nerf when attacking different Class foe
+
+    int EnStrBuff, EnStrNerf, EnDexBuff, EnDexNerf, EnIntBuff, EnIntNerf; // Stats buff/nerf when attacking different Class foe
+
+
     // shows player and enemy damages calculated
     public Text DmgDoneTxt;
     public Text DmgTakenTxt;
@@ -77,6 +82,7 @@ public class EnemyClass3AttDef : MonoBehaviour
 
         PersistentManagerScript.Instance.XPScreen = 0;
 
+        ClassBuffNerf();
     }
 
 
@@ -106,6 +112,29 @@ public class EnemyClass3AttDef : MonoBehaviour
         KeepEnInt = 0;
 
     }
+
+    void ClassBuffNerf()
+    {
+        STRBuff = STR + (STR / 4); // Player Strength get 25% buff
+        STRNerf = STR - (STR / 4); // Player Strength get 25% nerf
+
+        DEXBuff = DEX + (DEX / 4); // Player Strength get 25% buff
+        DEXNerf = DEX - (DEX / 4); // Player Strength get 25% nerf
+
+        INTBuff = INT + (INT / 4); // Player Strength get 25% buff
+        INTNerf = INT - (INT / 4); // Player Strength get 25% nerf
+
+        EnStrBuff = EnStr + (EnStr / 4);
+        EnStrNerf = EnStr - (EnStr / 4);
+
+        EnDexBuff = EnDex + (EnDex / 4);
+        EnDexNerf = EnDex - (EnDex / 4);
+
+        EnIntBuff = EnInt + (EnInt / 4);
+        EnIntNerf = EnInt - (EnInt / 4);
+
+    }
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -233,6 +262,8 @@ public class EnemyClass3AttDef : MonoBehaviour
 
     IEnumerator FightStart()
     {
+
+
         PersistentManagerScript.Instance.IsCritical = false;
         PersistentManagerScript.Instance.EnemyTurn = false;
         PersistentManagerScript.Instance.PlayerTurn = false;
@@ -248,7 +279,7 @@ public class EnemyClass3AttDef : MonoBehaviour
         {
             PersistentManagerScript.Instance.EnemyTurn = true;
             PersistentManagerScript.Instance.PlayerTurn = false;
-            Debug.Log("Enemy STARTS");
+
 
         }
 
@@ -319,21 +350,21 @@ public class EnemyClass3AttDef : MonoBehaviour
         if (EnHealth >= 0 && PersistentManagerScript.Instance.EnemyTurn == false)
         {
             PersistentManagerScript.Instance.StartRandomCrit = true;
-            Debug.Log("You made attack!");
+
 
             yield return new WaitForSeconds(TurnStartTime);
 
 
 
-            if (PlayerClass == 1) // Basic Attack from Class1
+            if (PlayerClass == 1) // Basic Attack from Class1 to Class3
             {
                 CriticalHitClac();
+                ClassBuffNerf();
 
-
-                if (STR >= (EnCon * 2))
+                if (STRNerf >= EnCon)
                 {
                     DmgCalc = EnHealth;
-                    EnHealth -= STR - (EnCon * 2);
+                    EnHealth -= STRNerf - EnCon;
 
                     PlayerDamageDone();
                     yield return new WaitForSeconds(DmgCalcTime);
@@ -348,15 +379,15 @@ public class EnemyClass3AttDef : MonoBehaviour
 
             }
 
-            if (PlayerClass == 2) // Basic Attack from Class2
+            if (PlayerClass == 2) // Basic Attack from Class2 to Class3
             {
                 CriticalHitClac();
+                ClassBuffNerf();
 
-
-                if (DEX >= (EnCon / 2)) // Con buff (advantage)
+                if (DEXBuff >= EnCon)
                 {
                     DmgCalc = EnHealth;
-                    EnHealth -= DEX - (EnCon / 2);
+                    EnHealth -= DEXBuff - EnCon;
                     PlayerDamageDone();
                     yield return new WaitForSeconds(DmgCalcTime);
                     DmgDoneTxt.text = " ";
@@ -370,12 +401,12 @@ public class EnemyClass3AttDef : MonoBehaviour
 
             }
 
-            if (PlayerClass == 3) // Basic Attack from Class3
+            if (PlayerClass == 3) // Basic Attack from Class3 to Class3
             {
                 CriticalHitClac();
+                ClassBuffNerf();
 
-
-                if (INT >= EnCon) // Con nerf (disadvantage)
+                if (INT >= EnCon)
                 {
                     DmgCalc = EnHealth;
                     EnHealth -= INT - EnCon;
@@ -423,26 +454,24 @@ public class EnemyClass3AttDef : MonoBehaviour
         {
             yield return new WaitForSeconds(TurnStartTime);
 
-
+            ClassBuffNerf();
 
             if (PlayerClass == 1)
             {
-                KeepValue = CON;
 
-                CON /= 2;
 
                 {
-                    if (EnInt >= CON)
+                    if (EnIntBuff >= CON)
                     {
                         DmgCalc = PlayerHealth;
-                        PlayerHealth -= EnInt - CON;
+                        PlayerHealth -= EnIntBuff - CON;
                         PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                         PlayerDamageTaken();
                         yield return new WaitForSeconds(DmgCalcTime);
                         DmgTakenTxt.text = " ";
 
                     }
-                    if (CON >= EnInt)
+                    if (CON >= EnIntBuff)
                     {
                         DmgCalc = PlayerHealth;
                         PlayerHealth -= 1;
@@ -451,7 +480,6 @@ public class EnemyClass3AttDef : MonoBehaviour
                         yield return new WaitForSeconds(DmgCalcTime);
                         DmgTakenTxt.text = " ";
                     }
-                    CON = KeepValue;
                 }
             }
 
@@ -459,18 +487,16 @@ public class EnemyClass3AttDef : MonoBehaviour
             {
                 KeepValue = CON;
 
-                CON *= 2;
-
-                if (EnInt >= CON)
+                if (EnIntNerf >= CON)
                 {
                     DmgCalc = PlayerHealth;
-                    PlayerHealth -= EnInt - CON;
+                    PlayerHealth -= EnIntNerf - CON;
                     PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                     PlayerDamageTaken();
                     yield return new WaitForSeconds(DmgCalcTime);
                     DmgTakenTxt.text = " ";
                 }
-                if (CON >= EnInt)
+                if (CON >= EnIntNerf)
                 {
                     DmgCalc = PlayerHealth;
                     PlayerHealth -= 1;
@@ -480,7 +506,7 @@ public class EnemyClass3AttDef : MonoBehaviour
                     DmgTakenTxt.text = " ";
                 }
 
-                CON = KeepValue; // Return Player's CON value
+                CON = KeepValue;
 
             }
 
