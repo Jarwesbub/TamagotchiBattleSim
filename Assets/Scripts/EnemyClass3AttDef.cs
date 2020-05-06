@@ -144,7 +144,7 @@ public class EnemyClass3AttDef : MonoBehaviour
         EnLVL = PersistentManagerScript.Instance.Lvl;
 
         EnLVLTxt.text = EnLVL.ToString();
-        EnLVLTxt.text = ("Level ") + EnLVLTxt.text + (" (Berserk)");
+        EnLVLTxt.text = ("Level ") + EnLVLTxt.text + (" (Wizard)");
 
     }
 
@@ -432,17 +432,17 @@ public class EnemyClass3AttDef : MonoBehaviour
                 CON /= 2;
 
                 {
-                    if (EnStr >= CON)
+                    if (EnInt >= CON)
                     {
                         DmgCalc = PlayerHealth;
-                        PlayerHealth -= EnStr - CON;
+                        PlayerHealth -= EnInt - CON;
                         PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                         PlayerDamageTaken();
                         yield return new WaitForSeconds(DmgCalcTime);
                         DmgTakenTxt.text = " ";
 
                     }
-                    if (CON >= EnStr)
+                    if (CON >= EnInt)
                     {
                         DmgCalc = PlayerHealth;
                         PlayerHealth -= 1;
@@ -461,16 +461,16 @@ public class EnemyClass3AttDef : MonoBehaviour
 
                 CON *= 2;
 
-                if (EnStr >= CON)
+                if (EnInt >= CON)
                 {
                     DmgCalc = PlayerHealth;
-                    PlayerHealth -= EnStr - CON;
+                    PlayerHealth -= EnInt - CON;
                     PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                     PlayerDamageTaken();
                     yield return new WaitForSeconds(DmgCalcTime);
                     DmgTakenTxt.text = " ";
                 }
-                if (CON >= EnStr)
+                if (CON >= EnInt)
                 {
                     DmgCalc = PlayerHealth;
                     PlayerHealth -= 1;
@@ -488,18 +488,18 @@ public class EnemyClass3AttDef : MonoBehaviour
             {
                 KeepValue = CON;
 
-                CON = 2;
+                
 
-                if (EnStr >= CON)
+                if (EnInt >= CON)
                 {
                     DmgCalc = PlayerHealth;
-                    PlayerHealth -= EnStr - CON;
+                    PlayerHealth -= EnInt - CON;
                     PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                     PlayerDamageTaken();
                     yield return new WaitForSeconds(DmgCalcTime);
                     DmgTakenTxt.text = " ";
                 }
-                if (CON >= EnStr)
+                if (CON >= EnInt)
                 {
                     DmgCalc = PlayerHealth;
                     PlayerHealth -= 1;

@@ -25,6 +25,7 @@ public class PSClass2 : MonoBehaviour
         if (PersistentManagerScript.Instance.Lvl == 1)
         {
             PersistentManagerScript.Instance.Str = 8;
+            //PersistentManagerScript.Instance.Con = 12;
             PersistentManagerScript.Instance.Con = 9;
             PersistentManagerScript.Instance.Dex = 13;
             PersistentManagerScript.Instance.Agi = 12;

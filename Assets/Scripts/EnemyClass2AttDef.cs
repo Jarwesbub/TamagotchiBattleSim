@@ -144,7 +144,7 @@ public class EnemyClass2AttDef : MonoBehaviour
         EnLVL = PersistentManagerScript.Instance.Lvl;
 
         EnLVLTxt.text = EnLVL.ToString();
-        EnLVLTxt.text = ("Level ") + EnLVLTxt.text + (" (Berserk)");
+        EnLVLTxt.text = ("Level ") + EnLVLTxt.text + (" (Rogue)");
 
     }
 
@@ -330,10 +330,10 @@ public class EnemyClass2AttDef : MonoBehaviour
                 CriticalHitClac();
 
 
-                if (STR >= EnCon * 2)
+                if (STR >= EnCon / 2)
                 {
                     DmgCalc = EnHealth;
-                    EnHealth -= STR - (EnCon * 2);
+                    EnHealth -= STR - (EnCon / 2);
 
                     PlayerDamageDone();
                     yield return new WaitForSeconds(DmgCalcTime);
@@ -432,17 +432,17 @@ public class EnemyClass2AttDef : MonoBehaviour
                 CON *= 2;
 
                 {
-                    if (EnStr >= CON)
+                    if (EnDex >= CON)
                     {
                         DmgCalc = PlayerHealth;
-                        PlayerHealth -= EnStr - CON;
+                        PlayerHealth -= EnDex - CON;
                         PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                         PlayerDamageTaken();
                         yield return new WaitForSeconds(DmgCalcTime);
                         DmgTakenTxt.text = " ";
 
                     }
-                    if (CON >= EnStr)
+                    if (CON >= EnDex)
                     {
                         DmgCalc = PlayerHealth;
                         PlayerHealth -= 1;
@@ -461,16 +461,16 @@ public class EnemyClass2AttDef : MonoBehaviour
   
                 
 
-                if (EnStr >= CON)
+                if (EnDex >= CON)
                 {
                     DmgCalc = PlayerHealth;
-                    PlayerHealth -= EnStr - CON;
+                    PlayerHealth -= EnDex - CON;
                     PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                     PlayerDamageTaken();
                     yield return new WaitForSeconds(DmgCalcTime);
                     DmgTakenTxt.text = " ";
                 }
-                if (CON >= EnStr)
+                if (CON >= EnDex)
                 {
                     DmgCalc = PlayerHealth;
                     PlayerHealth -= 1;
@@ -488,18 +488,18 @@ public class EnemyClass2AttDef : MonoBehaviour
             {
                 KeepValue = CON;
 
-                CON *= 2;
+                CON /= 2;
 
-                if (EnStr >= CON)
+                if (EnDex >= CON)
                 {
                     DmgCalc = PlayerHealth;
-                    PlayerHealth -= EnStr - CON;
+                    PlayerHealth -= EnDex - CON;
                     PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                     PlayerDamageTaken();
                     yield return new WaitForSeconds(DmgCalcTime);
                     DmgTakenTxt.text = " ";
                 }
-                if (CON >= EnStr)
+                if (CON >= EnDex)
                 {
                     DmgCalc = PlayerHealth;
                     PlayerHealth -= 1;
