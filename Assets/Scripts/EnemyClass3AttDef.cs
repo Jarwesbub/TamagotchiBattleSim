@@ -550,17 +550,17 @@ public class EnemyClass3AttDef : MonoBehaviour
             EnDex = KeepEnDex;
             EnInt = KeepEnInt;
 
-            if (PlayerClass == 3)
+            if (PlayerClass == 1)
             {
-                if ((INT / 2) >= EnCon)
+                if ((STR / 2) >= EnCon)
                 {
 
                     DmgCalc = EnHealth;
 
-                    EnHealth -= (INT / 2) - EnCon;
+                    EnHealth -= (STR / 2) - EnCon;
 
 
-                }
+            }
 
                 PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
                 DmgDoneTxt.text = " ";
