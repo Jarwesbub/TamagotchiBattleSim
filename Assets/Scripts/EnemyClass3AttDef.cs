@@ -443,10 +443,13 @@ public class EnemyClass3AttDef : MonoBehaviour
             KeepEnDex = EnDex;
             KeepEnInt = EnInt;
 
-
             EnStr = (EnStr / 4) * 3; // Defense buff 30% (enemy strength down for next attack)
             EnDex = (EnDex / 4) * 3;
             EnInt = (EnInt / 4) * 3;
+
+            
+
+
         }
 
 
@@ -546,6 +549,27 @@ public class EnemyClass3AttDef : MonoBehaviour
             EnStr = KeepEnStr;
             EnDex = KeepEnDex;
             EnInt = KeepEnInt;
+
+            if (PlayerClass == 3)
+            {
+                if ((INT / 2) >= EnCon)
+                {
+
+                    DmgCalc = EnHealth;
+
+                    EnHealth -= (INT / 2) - EnCon;
+
+
+                }
+
+                PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                DmgDoneTxt.text = " ";
+                PlayerDamageDone();
+                yield return new WaitForSeconds(DmgCalcTime);
+                DmgDoneTxt.text = " ";
+
+
+            }
 
             PlayerDefUP = false;
             PersistentManagerScript.Instance.BasicDefense = false;

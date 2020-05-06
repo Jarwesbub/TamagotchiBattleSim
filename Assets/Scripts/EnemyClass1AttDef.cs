@@ -439,6 +439,8 @@ public class EnemyClass1AttDef : MonoBehaviour
         //PersistentManagerScript.Instance.BasicAttack = false;
         if (PlayerDefUP == true)
         {
+            KeepValue = 10;
+
             KeepEnStr = EnStr;
             KeepEnDex = EnDex;
             KeepEnInt = EnInt;
@@ -542,6 +544,28 @@ public class EnemyClass1AttDef : MonoBehaviour
             EnStr = KeepEnStr;
             EnDex = KeepEnDex;
             EnInt = KeepEnInt;
+
+            // Player1 Defense skill counter attack 50%/STR
+            if (PlayerClass == 1)
+            {
+                if ((STR / 2) >= EnCon)
+                {
+
+                    DmgCalc = EnHealth;
+                    
+                    EnHealth -= (STR / 2) - EnCon;
+
+
+                }
+
+                PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                DmgDoneTxt.text = " ";
+                PlayerDamageDone();
+                yield return new WaitForSeconds(DmgCalcTime);
+                DmgDoneTxt.text = " ";
+
+
+            }
 
             PlayerDefUP = false;
             PersistentManagerScript.Instance.BasicDefense = false;

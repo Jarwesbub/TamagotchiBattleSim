@@ -544,6 +544,29 @@ public class EnemyClass2AttDef : MonoBehaviour
 
             PlayerDefUP = false;
             PersistentManagerScript.Instance.BasicDefense = false;
+
+            if (PlayerClass == 2)
+            {
+                if ((DEX / 2) >= EnCon)
+                {
+
+                    DmgCalc = EnHealth;
+
+                    EnHealth -= (DEX / 2) - EnCon;
+
+
+                }
+
+                PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                DmgDoneTxt.text = " ";
+                PlayerDamageDone();
+                yield return new WaitForSeconds(DmgCalcTime);
+                DmgDoneTxt.text = " ";
+
+
+            }
+
+
         }
 
 
