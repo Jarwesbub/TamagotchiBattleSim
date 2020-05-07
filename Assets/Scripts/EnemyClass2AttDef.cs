@@ -542,13 +542,13 @@ public class EnemyClass2AttDef : MonoBehaviour
             EnDex = KeepEnDex;
             EnInt = KeepEnInt;
 
+            DmgCalc = EnHealth;
 
             if (PlayerClass == 1) // Player1 Defense skill counter attack 50%/STR
             {
                 if ((STR / 2) >= EnCon)
                 {
 
-                    DmgCalc = EnHealth;
 
                     EnHealth -= (STR / 2) - EnCon;
 
