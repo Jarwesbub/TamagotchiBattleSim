@@ -38,7 +38,7 @@ public class MenuManagerScript : MonoBehaviour
     }
     public void GoToTamaMenu()
     {
-        
+
         TamaMenu.SetActive(true);
         World1.SetActive(false);
         OpenWorld.SetActive(false);
@@ -53,22 +53,17 @@ public class MenuManagerScript : MonoBehaviour
     public void GoToSkillPoints()
     {
 
-            SkillPointsMenu.SetActive(true);
-            World1.SetActive(false);
-            OpenWorld.SetActive(false);
-            TamaMenu.SetActive(false);
-            MainCamera.SetActive(true);
-            CanvasStats.SetActive(true);
+        SkillPointsMenu.SetActive(true);
+        World1.SetActive(false);
+        OpenWorld.SetActive(false);
+        TamaMenu.SetActive(false);
+        MainCamera.SetActive(true);
+        CanvasStats.SetActive(true);
 
     }
 
 
 
-    public void AddLevel()
-    {
-        PersistentManagerScript.Instance.LvlGet = true;
-        PersistentManagerScript.Instance.Lvl += 1;
-    }
 
     void Update()
     {
@@ -95,7 +90,7 @@ public class MenuManagerScript : MonoBehaviour
             FightScreen.SetActive(true);
             CanvasFight.SetActive(true);
         }
-        
+
         else
         {
             GoMenu.SetActive(true);
@@ -104,7 +99,6 @@ public class MenuManagerScript : MonoBehaviour
             PlayerFight.SetActive(false);
             CanvasFight.SetActive(false);
         }
-        
     }
-
 }
+

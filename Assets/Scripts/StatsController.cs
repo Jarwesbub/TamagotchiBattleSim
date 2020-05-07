@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class StatsController : MonoBehaviour
 {
-    //public int XPScreen;
-    //public bool EnemyTurn = false;
+    
 
     public GameObject FightXPScreen;
     public GameObject PlayerTurn;
@@ -26,9 +25,7 @@ public class StatsController : MonoBehaviour
             CritHitObject.SetActive(false);
         }
 
-        //XPScreen = PersistentManagerScript.Instance.XPScreen;
-        //XPScreen = PersistentManagerScript.Instance.XPScreen;
-        //EnemyTurn = PersistentManagerScript.Instance.EnemyTurn;
+
 
         if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.XPScreen == 0)
         {
@@ -54,18 +51,6 @@ public class StatsController : MonoBehaviour
         }
 
 
-
-
-
-
-
-        /*
-        if (Input.GetKeyDown("space"))
-        {
-                PersistentManagerScript.Instance.LvlGet = true;
-                PersistentManagerScript.Instance.Lvl += 1;
-        }
-        */
 
 
         //Testing PlayerClasses from 1-3

@@ -67,7 +67,7 @@ public class EnemyClass3AttDef : MonoBehaviour
     float TurnStartTime = 0.2f;
     float TurnEndTime = 1f;
 
-    float EnemyDeathTime = 3f;
+    float EnemyDeathTime = 2.5f;
 
     float SpawnPosX = 3;
     float SpawnPosY = 0;
@@ -101,6 +101,7 @@ public class EnemyClass3AttDef : MonoBehaviour
         WIS = PersistentManagerScript.Instance.Wis;
 
         EnLVL = PersistentManagerScript.Instance.Lvl;
+        PersistentManagerScript.Instance.EnLvl = EnLVL;
 
         KeepValue = 0;
         KeepValue1 = 0;
@@ -143,18 +144,12 @@ public class EnemyClass3AttDef : MonoBehaviour
         transform.SetParent(myParentObject.transform);
         transform.position = new Vector2(SpawnPosX, SpawnPosY);
         PersistentManagerScript.Instance.FightScreen = true;
-
+        DrawEnStatsOnce();
         StartCoroutine(FightStart());
 
     }
-
-
-
-    void DrawEnStats()
+    void DrawEnStatsOnce()
     {
-        EnHealthTxt.text = EnHealth.ToString();
-        EnHealthTxt.text = "HP      " + EnHealthTxt.text;
-
         EnStrTxt.text = EnStr.ToString();
         EnStrTxt.text = "Str      " + EnStrTxt.text;
 
@@ -174,6 +169,16 @@ public class EnemyClass3AttDef : MonoBehaviour
 
         EnLVLTxt.text = EnLVL.ToString();
         EnLVLTxt.text = ("Level ") + EnLVLTxt.text + (" (Wizard)");
+
+    }
+
+
+    void DrawEnStatsUpdate()
+    {
+        EnHealthTxt.text = EnHealth.ToString();
+        EnHealthTxt.text = "HP      " + EnHealthTxt.text;
+
+        EnLVL = PersistentManagerScript.Instance.Lvl;
 
     }
 
@@ -204,7 +209,7 @@ public class EnemyClass3AttDef : MonoBehaviour
 
 
 
-        DrawEnStats();
+        DrawEnStatsUpdate();
 
 
         if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.BasicAttack == true)
@@ -262,7 +267,7 @@ public class EnemyClass3AttDef : MonoBehaviour
 
     IEnumerator FightStart()
     {
-
+        PersistentManagerScript.Instance.EnDies = 0;
 
         PersistentManagerScript.Instance.IsCritical = false;
         PersistentManagerScript.Instance.EnemyTurn = false;
@@ -295,6 +300,11 @@ public class EnemyClass3AttDef : MonoBehaviour
         yield return new WaitForSeconds(DmgCalcTime);
         DmgTakenTxt.text = " ";
         PersistentManagerScript.Instance.XPScreen = 1;
+
+        yield return new WaitForSeconds(0.5f);
+
+        PersistentManagerScript.Instance.EnDies = 1;
+
 
         yield return new WaitForSeconds(EnemyDeathTime);
 

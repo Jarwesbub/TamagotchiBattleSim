@@ -27,6 +27,11 @@ public class PersistentManagerScript : MonoBehaviour
     public bool BasicDefense = false;
 
     public int XPScreen = 0; // 0 = No screen, 1 = Fight screen,
+    public int XPpoints;
+    public bool XPStart;
+    public int EnDies = 0;
+
+    public int EnLvl;
 
 
     private void Awake()
@@ -67,15 +72,6 @@ public class PersistentManagerScript : MonoBehaviour
             
         }
 
-
-
-        /*
-        if (Input.GetKeyDown("c")) // Critical hit randomizer TEST BUTTON
-        {
-            CriticalHitChance();
-
-        }
-        */
     }
 
 
@@ -86,7 +82,6 @@ public class PersistentManagerScript : MonoBehaviour
 
         if (Randomizer100 <= CritHit)
         {
-            Debug.Log("CRITICAL HIT");
 
             IsCritical = true;
 

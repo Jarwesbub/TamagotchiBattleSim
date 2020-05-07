@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,20 +10,14 @@ public class SkillPointsController : MonoBehaviour
     public Text SkillPointsTxt;
 
 
-
-
-
     public void Start()
     {
         SkillPoints = PersistentManagerScript.Instance.SkillPoints;
-
-
-
-    }
-
+     }
 
     public void Update()
     {
+        
 
         if (PersistentManagerScript.Instance.Lvl == 1)
         {
@@ -31,7 +26,6 @@ public class SkillPointsController : MonoBehaviour
 
 
         }
-
 
         if (PersistentManagerScript.Instance.Lvl == 2)
         {

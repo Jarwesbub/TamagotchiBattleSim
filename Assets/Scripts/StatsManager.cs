@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class StatsManager : MonoBehaviour
 {
     public Text LvlTxt; //Player's current Level
+    public Text XPpointsTxt;
 
     // Attacking stats
 
@@ -40,6 +42,9 @@ public class StatsManager : MonoBehaviour
     {
         LvlTxt.text = PersistentManagerScript.Instance.Lvl.ToString();
         LvlTxt.text = "Level    " + LvlTxt.text;
+
+        XPpointsTxt.text = PersistentManagerScript.Instance.XPpoints.ToString();
+        XPpointsTxt.text = "Exp      " + XPpointsTxt.text;
 
 
         StrTxt.text = PersistentManagerScript.Instance.Str.ToString();
