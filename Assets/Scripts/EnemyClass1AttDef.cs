@@ -70,7 +70,7 @@ public class EnemyClass1AttDef : MonoBehaviour
 
     float EnemyDeathTime = 2.5f;
 
-    float SpawnPosX = 3;
+    float SpawnPosX = 2;
     float SpawnPosY = 0;
 
     // -> When enemy dies timing -> IEnumerator EnemyDeath()

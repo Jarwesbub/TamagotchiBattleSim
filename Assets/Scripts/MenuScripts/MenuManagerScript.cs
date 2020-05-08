@@ -14,7 +14,6 @@ public class MenuManagerScript : MonoBehaviour
     public GameObject FightScreen;
     public GameObject CanvasFight;
     public GameObject MainCamera; // When moving to gameplay screen -> disable "Statscamera"
-
     public GameObject PlayerMove;
     public GameObject PlayerFight;
 
@@ -31,6 +30,7 @@ public class MenuManagerScript : MonoBehaviour
 
         PlayerMove.SetActive(true);
         PlayerFight.SetActive(false);
+
 
         //SceneManager.LoadScene("TamaMenuScene");
         //PersistentManagerScript.Instance.Str++; //test add 1
@@ -86,7 +86,7 @@ public class MenuManagerScript : MonoBehaviour
             PlayerFight.SetActive(true);
             GoMenu.SetActive(false);
 
-            MainCamera.SetActive(true);
+            //MainCamera.SetActive(true);
             FightScreen.SetActive(true);
             CanvasFight.SetActive(true);
         }
@@ -98,6 +98,7 @@ public class MenuManagerScript : MonoBehaviour
             PlayerMove.SetActive(true);
             PlayerFight.SetActive(false);
             CanvasFight.SetActive(false);
+            FightScreen.SetActive(false);
         }
     }
 }
