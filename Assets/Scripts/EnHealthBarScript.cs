@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarScript : MonoBehaviour
+public class EnHealthBarScript : MonoBehaviour
 {
     public Slider slider;
     public Gradient gradient;
@@ -11,9 +11,11 @@ public class HealthBarScript : MonoBehaviour
 
 
 
+
     public void SetMaxHealth(int health)
     {
-        //health = PersistentManagerScript.Instance.PlayerHealth;
+        
+        health = PersistentManagerScript.Instance.EnemyHealth;
         slider.maxValue = health;
         slider.value = health;
 

@@ -9,9 +9,10 @@ public class StatsManager : MonoBehaviour
 {
     public Text LvlTxt; //Player's current Level
     public Text XPpointsTxt;
-
+    public Text HpTxt;
+    public Text ManaTxt;
     // Attacking stats
-
+    
     public Text StrTxt; //Strength based attacks
     public Text DexTxt; //Dexterity based attacks
     public Text AgiTxt; //Agility based attacks
@@ -58,6 +59,12 @@ public class StatsManager : MonoBehaviour
 
         XPpointsTxt.text = PersistentManagerScript.Instance.XPpoints.ToString();
         XPpointsTxt.text = "Exp      " + XPpointsTxt.text;
+
+        HpTxt.text = PersistentManagerScript.Instance.PlayerHealth.ToString();
+        HpTxt.text = "HP       " + HpTxt.text;
+
+        ManaTxt.text = PersistentManagerScript.Instance.PlayerMana.ToString();
+        ManaTxt.text = "MP       " + ManaTxt.text;
 
 
         StrTxt.text = PersistentManagerScript.Instance.Str.ToString();

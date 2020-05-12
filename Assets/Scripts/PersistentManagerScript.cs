@@ -8,6 +8,13 @@ public class PersistentManagerScript : MonoBehaviour
     public bool GameReset = false;
 
     public int PlayerHealth = 100; // WIP
+    public int PlayerMana;
+    public int maxMana = 30;
+    public bool Run = false;
+
+    public int EnemyHealth;
+    public int EnemyMaxHealth;
+
     public bool LvlGet = false; //If player gets level true or false
 
     public bool GameStart = true;
@@ -24,6 +31,7 @@ public class PersistentManagerScript : MonoBehaviour
     public bool PlayerTurn = false;
 
     public bool BasicAttack = false;
+    public bool SuperAttack = false;
     public bool BasicDefense = false;
 
     public int XPScreen = 0; // 0 = No screen, 1 = Fight screen,

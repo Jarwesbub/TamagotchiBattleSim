@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+//using UnityEngine.UI;
 
 public class MenuManagerScript : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class MenuManagerScript : MonoBehaviour
 
     public GameObject GoMenu;
 
+    public GameObject TamaPlayer;
+    public GameObject SleepTextObj;
 
 
     public void GoToWorld1()
@@ -66,8 +69,32 @@ public class MenuManagerScript : MonoBehaviour
 
     }
 
+    public void AddHealth()
+    {
+        PersistentManagerScript.Instance.PlayerHealth = 100;
+
+    }
+
+    public void SleepButton()
+    {
+        StartCoroutine(Sleep());
+        PersistentManagerScript.Instance.PlayerMana = PersistentManagerScript.Instance.maxMana;
 
 
+    }
+    IEnumerator Sleep()
+    {
+        TamaPlayer.SetActive(false);
+        SleepTextObj.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        SleepTextObj.SetActive(false);
+        TamaPlayer.SetActive(true);
+
+
+
+    }
 
     void Update()
     {

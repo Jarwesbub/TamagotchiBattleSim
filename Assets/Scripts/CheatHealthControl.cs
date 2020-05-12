@@ -14,5 +14,12 @@ public class CheatHealthControl : MonoBehaviour
             PersistentManagerScript.Instance.PlayerHealth += 20;
 
         }
+        if (Input.GetKeyDown("m"))
+        {
+            PersistentManagerScript.Instance.PlayerMana += 20;
+
+        }
+
+
     }
 }

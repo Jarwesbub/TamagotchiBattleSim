@@ -21,6 +21,7 @@ public class EnemyKillScript : MonoBehaviour
         
         if (PersistentManagerScript.Instance.EnDies == 1)
         {
+            
             StartCoroutine(EnemyDeathWait());
         }
         
@@ -30,17 +31,38 @@ public class EnemyKillScript : MonoBehaviour
             Debug.Log("Too many childs");
             Destroy(transform.GetChild(i).gameObject);
         }
+
+        //if (PersistentManagerScript.Instance.EnDies == 2)
+        if (PersistentManagerScript.Instance.Run == true)
+        {
+            foreach (Transform child in transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+
+            PersistentManagerScript.Instance.EnDies = 0;
+            PersistentManagerScript.Instance.XPScreen = 0;
+            PersistentManagerScript.Instance.PlayerTurn = false;
+            PersistentManagerScript.Instance.Run = false;
+            PersistentManagerScript.Instance.FightScreen = false;
+        }
         
+
     }
-    
+
+
+
     IEnumerator EnemyDeathWait()
     {
         foreach (Transform child in transform)
         {
             GameObject.Destroy(child.gameObject);
         }
+        
         PersistentManagerScript.Instance.EnDies = 0;
+
         yield return new WaitForSeconds(2f);
+        
         PersistentManagerScript.Instance.XPScreen = 0;
         PersistentManagerScript.Instance.PlayerTurn = false;
         PersistentManagerScript.Instance.FightScreen = false;

@@ -26,7 +26,11 @@ public class PlayerFight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (PersistentManagerScript.Instance.Run == true)
+        {
+            Player = 0;
+            PersistentManagerScript.Instance.Run = false;
+        }
 
         for (int i = Player; i < 1; i++)
         {
