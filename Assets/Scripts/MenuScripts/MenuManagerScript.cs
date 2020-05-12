@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuManagerScript : MonoBehaviour
 {
+
     public GameObject World1;
     public GameObject OpenWorld;
     public GameObject TamaMenu;
@@ -19,8 +20,11 @@ public class MenuManagerScript : MonoBehaviour
 
     public GameObject GoMenu;
 
+
+
     public void GoToWorld1()
     {
+
         World1.SetActive(true);
         OpenWorld.SetActive(true);
         TamaMenu.SetActive(false);
@@ -67,16 +71,18 @@ public class MenuManagerScript : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKeyDown("l"))
         {
             PersistentManagerScript.Instance.FightScreen = false;
 
         }
-
+        */
 
 
         if (PersistentManagerScript.Instance.FightScreen == true)
         {
+
             World1.SetActive(true);
             OpenWorld.SetActive(false);
             TamaMenu.SetActive(false);
@@ -93,6 +99,7 @@ public class MenuManagerScript : MonoBehaviour
 
         else
         {
+
             GoMenu.SetActive(true);
             OpenWorld.SetActive(true);
             PlayerMove.SetActive(true);

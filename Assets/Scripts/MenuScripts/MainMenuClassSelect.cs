@@ -5,6 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuClassSelect : MonoBehaviour
 {
+    public GameObject ContinueButton;
+
+
+    void Start()
+    {
+        ContinueButton.SetActive(false);
+
+        if (PersistentManagerScript.Instance.PlayerHealth <= 1)
+        {
+            ContinueButton.SetActive(true);
+        }
+
+    }
+
     public void GoClassSelectScene()
     {
         //PersistentManagerScript.Instance.PlayerHealth = 100;
@@ -12,6 +26,12 @@ public class MainMenuClassSelect : MonoBehaviour
         
     }
 
+    public void ContinueGame()
+    {
+        PersistentManagerScript.Instance.PlayerHealth = 100;
+        SceneManager.LoadScene("World1Scene");
+
+    }
 
 
     public void ChooseClass1()

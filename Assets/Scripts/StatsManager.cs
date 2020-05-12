@@ -40,8 +40,21 @@ public class StatsManager : MonoBehaviour
 
     private void Update()
     {
-        LvlTxt.text = PersistentManagerScript.Instance.Lvl.ToString();
-        LvlTxt.text = "Level    " + LvlTxt.text;
+        if (PersistentManagerScript.Instance.PlayerClass == 1)
+        {
+            LvlTxt.text = PersistentManagerScript.Instance.Lvl.ToString();
+            LvlTxt.text = "Level " + LvlTxt.text + " (Warrior)";
+        }
+        if (PersistentManagerScript.Instance.PlayerClass == 2)
+        {
+            LvlTxt.text = PersistentManagerScript.Instance.Lvl.ToString();
+            LvlTxt.text = "Level " + LvlTxt.text + " (Rogue)";
+        }
+        if (PersistentManagerScript.Instance.PlayerClass == 3)
+        {
+            LvlTxt.text = PersistentManagerScript.Instance.Lvl.ToString();
+            LvlTxt.text = "Level " + LvlTxt.text + " (Wizard)";
+        }
 
         XPpointsTxt.text = PersistentManagerScript.Instance.XPpoints.ToString();
         XPpointsTxt.text = "Exp      " + XPpointsTxt.text;
@@ -69,51 +82,49 @@ public class StatsManager : MonoBehaviour
         WisTxt.text = "Wis      " + WisTxt.text;
 
 
-        PlayerClass.text = PersistentManagerScript.Instance.PlayerClass.ToString();
-        PlayerClass.text = "PlayerClass     " + PlayerClass.text;
 
+        if (PersistentManagerScript.Instance.FightScreen == false)
+        {
+            if (PersistentManagerScript.Instance.PlayerClass == 1)
+            {
+                PSClass1.SetActive(true);
+                PlayerClass1.SetActive(true);
+                TamaClass1.SetActive(true);
 
+            }
+            else
+            {
+                PSClass1.SetActive(false);
+                PlayerClass1.SetActive(false);
+                TamaClass1.SetActive(false);
+            }
 
-        if (PersistentManagerScript.Instance.PlayerClass == 1)
-        {
-            PSClass1.SetActive(true);
-            PlayerClass1.SetActive(true);
-            TamaClass1.SetActive(true);
-            
-        }
-        else
-        {
-            PSClass1.SetActive(false);
-            PlayerClass1.SetActive(false);
-            TamaClass1.SetActive(false);
-        }
+            if (PersistentManagerScript.Instance.PlayerClass == 2)
+            {
+                PSClass2.SetActive(true);
+                PlayerClass2.SetActive(true);
+                TamaClass2.SetActive(true);
+            }
+            else
+            {
+                PSClass2.SetActive(false);
+                PlayerClass2.SetActive(false);
+                TamaClass2.SetActive(false);
+            }
 
-        if (PersistentManagerScript.Instance.PlayerClass == 2)
-        {
-            PSClass2.SetActive(true);
-            PlayerClass2.SetActive(true);
-            TamaClass2.SetActive(true);
+            if (PersistentManagerScript.Instance.PlayerClass == 3)
+            {
+                PSClass3.SetActive(true);
+                PlayerClass3.SetActive(true);
+                TamaClass3.SetActive(true);
+            }
+            else
+            {
+                PSClass3.SetActive(false);
+                PlayerClass3.SetActive(false);
+                TamaClass3.SetActive(false);
+            }
         }
-        else
-        {
-            PSClass2.SetActive(false);
-            PlayerClass2.SetActive(false);
-            TamaClass2.SetActive(false);
-        }
-
-        if (PersistentManagerScript.Instance.PlayerClass == 3)
-        {
-            PSClass3.SetActive(true);
-            PlayerClass3.SetActive(true);
-            TamaClass3.SetActive(true);
-        }
-        else
-        {
-            PSClass3.SetActive(false);
-            PlayerClass3.SetActive(false);
-            TamaClass3.SetActive(false);
-        }
-
 
 
 

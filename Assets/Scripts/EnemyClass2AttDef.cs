@@ -65,16 +65,19 @@ public class EnemyClass2AttDef : MonoBehaviour
     float TurnStartTime = 0.2f;
     float TurnEndTime = 1f;
 
-    float EnemyDeathTime = 2.5f;
+    //float EnemyDeathTime = 2.5f;
 
-    float SpawnPosX = 2;
-    float SpawnPosY = 0;
+    public float SpawnPosX = 0;
+    public float SpawnPosY = 0;
 
     // -> When enemy dies timing -> IEnumerator EnemyDeath()
 
 
     void Start()
     {
+        GetComponent<SpriteRenderer>().enabled = false; //Makes object invisible
+        GetComponent<Animator>().enabled = false;
+
         GetPlayerStats();
 
 
@@ -135,6 +138,8 @@ public class EnemyClass2AttDef : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        GetComponent<SpriteRenderer>().enabled = true; //Makes object visible
+        GetComponent<Animator>().enabled = true;
         GetPlayerStats();
         PersistentManagerScript.Instance.XPScreen = 0;
         transform.SetParent(myParentObject.transform);
@@ -300,7 +305,7 @@ public class EnemyClass2AttDef : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         PersistentManagerScript.Instance.EnDies = 1;
-
+        /*
         yield return new WaitForSeconds(EnemyDeathTime);
 
         PersistentManagerScript.Instance.XPScreen = 0;
@@ -308,6 +313,7 @@ public class EnemyClass2AttDef : MonoBehaviour
         PersistentManagerScript.Instance.FightScreen = false;
 
         Destroy(gameObject);
+        */
     }
 
 

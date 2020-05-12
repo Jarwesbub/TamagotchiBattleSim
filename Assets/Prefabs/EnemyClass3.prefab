@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1920768625789764342}
   - component: {fileID: 1920768625789764343}
   - component: {fileID: 3370173234053694217}
+  - component: {fileID: 670723842}
   m_Layer: 0
   m_Name: EnemyClass3
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1920768625789764299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.26, y: -2.78, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,10 +73,10 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 1186679e20b252a48b4ffc6e52f41b94, type: 3}
-  m_Color: {r: 0.5804117, g: 0.13136347, b: 0.6792453, a: 1}
-  m_FlipX: 0
+  m_SortingOrder: 10
+  m_Sprite: {fileID: 21300000, guid: d09c09fde1df1c04b81a4619eba72297, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.79, y: 0.8}
@@ -94,12 +95,12 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.86564994}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 1.26565
 --- !u!61 &1920768625789764343
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -107,7 +108,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920768625789764299}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -116,8 +117,8 @@ BoxCollider2D:
   m_Offset: {x: 0.04543376, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.79, y: 0.8}
+    pivot: {x: 0.5200256, y: 0.20312902}
+    oldSize: {x: 3.2228572, y: 3.0857143}
     newSize: {x: 0.79, y: 0.8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -159,3 +160,24 @@ MonoBehaviour:
   EnConTxt: {fileID: 0}
   EnAgiTxt: {fileID: 0}
   EnLVLTxt: {fileID: 0}
+  SpawnPosX: 3
+  SpawnPosY: 0
+--- !u!95 &670723842
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920768625789764299}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9cdcba99e17a5e5428dcaead0701402c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
