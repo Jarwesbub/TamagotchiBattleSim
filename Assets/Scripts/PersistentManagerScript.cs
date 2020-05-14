@@ -32,15 +32,21 @@ public class PersistentManagerScript : MonoBehaviour
 
     public bool BasicAttack = false;
     public bool SuperAttack = false;
+    public bool UltraAttack = false;
     public bool BasicDefense = false;
 
     public int XPScreen = 0; // 0 = No screen, 1 = Fight screen,
     public int XPpoints;
     public bool XPStart;
     public int EnDies = 0;
-
     public int EnLvl;
 
+    public bool StunActive;
+    public bool PoisonActive;
+    public bool ConfusionActive;
+    public bool WeakenActive;
+    public bool SlowActive;
+    public bool BurnActive;
 
     private void Awake()
     {

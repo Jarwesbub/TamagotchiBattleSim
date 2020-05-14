@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +10,7 @@ public class EnemyClass1AttDef : MonoBehaviour
 
     public int EnLVL = 1;
     public int EnHealth = 100;
-    public int EnStr;
+    
 
     // DmgCalc = Damage that is done to player or enemy. DmgCalcWaitTime = Time that stat is shown
     int DmgCalc = 0;
@@ -16,14 +18,13 @@ public class EnemyClass1AttDef : MonoBehaviour
 
     public bool PlayerDefUP = false;
 
+    public int EnStr;
     public int EnAgi;
     public int EnDex;
     public int EnInt;
     public int EnCon;
 
     public bool EnemyTurn; // Who is doing attack first -> false = player, true = enemy
-
-   
 
 
     //Player's stats
@@ -40,8 +41,20 @@ public class EnemyClass1AttDef : MonoBehaviour
     int KeepEnStr; // Holds enemy stats for status effects
     int KeepEnDex;
     int KeepEnInt;
-    // Neutral status effects
-    int NoStatusEffect;
+    int KeepEnAgi;
+
+    int WeakEnStr; // Holds enemy stats in Weakness status effect
+    int WeakEnDex;
+    int WeakEnInt;
+    int WeakEnAgi;
+
+    int SlowEnAgi;
+    //bool SlowEnAgiTrue = false;
+
+    // Hold basic value when status effects active
+    //int NoStatusEffect;
+    int NoConfusionEffect;
+    int ConfusionEffectCon;
 
     int STRBuff, STRNerf, DEXBuff, DEXNerf, INTBuff, INTNerf; // Stats buff/nerf when attacking different Class foe
 
@@ -52,6 +65,8 @@ public class EnemyClass1AttDef : MonoBehaviour
     // shows player and enemy damages calculated
     public Text DmgDoneTxt;
     public Text DmgTakenTxt;
+
+    public bool DoubleDmg = false;
 
     //private bool CollisionCheck = false; // testausta
 
@@ -81,6 +96,11 @@ public class EnemyClass1AttDef : MonoBehaviour
     public int StunEffect = 0;
     public int PoisonEffect = 0;
     public int ConfusionEffect = 0;
+    public int WeakenEffect = 0;
+    public int SlowEffect = 0;
+    public int BurnEffect = 0;
+
+
 
 
     void Start()
@@ -134,16 +154,16 @@ public class EnemyClass1AttDef : MonoBehaviour
 
         EnLVL = PersistentManagerScript.Instance.Lvl;
         PersistentManagerScript.Instance.EnLvl = EnLVL;
-
+        /*
         KeepValue = 0; 
         KeepValue1 = 0; 
         KeepValue2 = 0;
         KeepValue3 = 0;
-
+        
         KeepEnStr = 0; 
         KeepEnDex = 0;
         KeepEnInt = 0;
-
+        */
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -162,14 +182,6 @@ public class EnemyClass1AttDef : MonoBehaviour
 
     void DrawEnStatsOnce()
     {
-        EnStrTxt.text = EnStr.ToString();
-        EnStrTxt.text = "Str      " + EnStrTxt.text;
-
-        EnConTxt.text = EnCon.ToString();
-        EnConTxt.text = "Con     " + EnConTxt.text;
-
-        EnAgiTxt.text = EnAgi.ToString();
-        EnAgiTxt.text = "Agi      " + EnAgiTxt.text;
 
         EnDexTxt.text = EnDex.ToString();
         EnDexTxt.text = "Dex     " + EnDexTxt.text;
@@ -187,6 +199,15 @@ public class EnemyClass1AttDef : MonoBehaviour
 
     void DrawEnStatsUpdate()
     {
+        EnStrTxt.text = EnStr.ToString();
+        EnStrTxt.text = "Str      " + EnStrTxt.text;
+
+        EnConTxt.text = EnCon.ToString();
+        EnConTxt.text = "Con     " + EnConTxt.text;
+
+        EnAgiTxt.text = EnAgi.ToString();
+        EnAgiTxt.text = "Agi      " + EnAgiTxt.text;
+
         EnHealthTxt.text = EnHealth.ToString();
         EnHealthTxt.text = "HP      " + EnHealthTxt.text;
 
@@ -198,12 +219,26 @@ public class EnemyClass1AttDef : MonoBehaviour
 
     void PlayerDamageDone()
     {
-        DmgCalc -= EnHealth;
+        if (DoubleDmg == true)
+        {
+            DmgCalc -= EnHealth;
+            //var DoubleDmg1 = DmgCalc + DmgCalc;
 
-        DmgDoneTxt.text = DmgCalc.ToString();
-        DmgDoneTxt.text = "-" + DmgDoneTxt.text;
+            DmgDoneTxt.text = DmgCalc.ToString();
+            DmgDoneTxt.text = "2x";
 
+            //DmgDoneTxt.text = DmgCalc.ToString();
+            //DmgDoneTxt.text = "  -" + DmgDoneTxt.text;
 
+        }
+        else
+        {
+            DmgCalc -= EnHealth;
+
+            DmgDoneTxt.text = DmgCalc.ToString();
+            DmgDoneTxt.text = "-" + DmgDoneTxt.text;
+
+        }
     }
 
     void PlayerDamageTaken()
@@ -231,8 +266,26 @@ public class EnemyClass1AttDef : MonoBehaviour
             if (PersistentManagerScript.Instance.BasicAttack == true)
                 {
                 PersistentManagerScript.Instance.BasicAttack = false;
+                //GetPlayerStats();
+                //StartCoroutine(PlayerBasicAttack());
                 GetPlayerStats();
-                StartCoroutine(PlayerBasicAttack());
+                if (AGI / 2 >= EnAgi)
+                {
+                    
+                    
+                    DoubleDmg = true;
+                    PlayerDamageDone();
+                    StartCoroutine(PlayerBasicAttack());
+
+                    StartCoroutine(PlayerBasicAttack());
+
+                    DoubleDmg = false;
+                }
+                else //if (AGI / 2 <= EnAgi)
+                {
+                    
+                    StartCoroutine(PlayerBasicAttack());
+                }
 
                 PersistentManagerScript.Instance.PlayerTurn = false;
             }
@@ -250,12 +303,24 @@ public class EnemyClass1AttDef : MonoBehaviour
                 PersistentManagerScript.Instance.PlayerTurn = false;
             }
 
+        }
 
+        //ULTRA ATTACK
+        if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.UltraAttack == true)
+        {
+            if (PersistentManagerScript.Instance.UltraAttack == true)
+            {
+                PersistentManagerScript.Instance.UltraAttack = false;
+                GetPlayerStats();
+                StartCoroutine(PlayerUltraAttack());
+
+                PersistentManagerScript.Instance.PlayerTurn = false;
+            }
 
         }
-        
-       // DEFENSE
-       if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.BasicDefense == true)
+
+        // DEFENSE
+        if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.BasicDefense == true)
         {
 
             if (PersistentManagerScript.Instance.BasicDefense == true)
@@ -388,8 +453,128 @@ public class EnemyClass1AttDef : MonoBehaviour
 
     }
     */
-    
+    IEnumerator PlayerUltraAttack()
+    {
+        if (EnHealth >= 0 && PersistentManagerScript.Instance.EnemyTurn == false)
+        {
+            PersistentManagerScript.Instance.StartRandomCrit = true;
 
+
+            yield return new WaitForSeconds(TurnStartTime);
+
+
+
+            if (PlayerClass == 1) // Ultra Attack from Class1 -> ///Cost-20 MP
+            {
+
+                CriticalHitClac();
+                ClassBuffNerf();
+                //ConfusionEffect += 1;
+                if (WeakenEffect == 0)
+                {
+                    WeakenEffect += 4;
+                }
+
+                //NoConfusionEffect = STR;
+                //STR = 20; // ATTACK   
+                PersistentManagerScript.Instance.PlayerMana -= 20;
+
+                if (STR >= EnCon)
+                {
+                    DmgCalc = EnHealth;
+                    EnHealth -= STR - EnCon;
+
+                    PlayerDamageDone();
+                    yield return new WaitForSeconds(DmgCalcTime);
+                    DmgDoneTxt.text = " ";
+                }
+                else
+                {
+
+                    
+                }
+
+
+                //STR = NoConfusionEffect; // ATTACK RESET VALUE                          
+
+            }
+
+            if (PlayerClass == 2) // 
+            {
+                if (SlowEffect == 0)
+                {
+                    SlowEffect += 4;
+                    EnAgi -= 5;
+                    
+                    SlowEnAgi = EnAgi;
+                }    
+                PersistentManagerScript.Instance.PlayerMana -= 20;
+                
+
+                CriticalHitClac();
+                ClassBuffNerf();
+
+                
+
+                if (DEXNerf >= EnCon)
+                {
+                    var DexUltra = 5;
+
+
+                    DmgCalc = EnHealth;
+                    //EnHealth -= DEXNerf - EnCon;
+                    EnHealth -= (DexUltra + DEXNerf) - EnCon;
+                    PlayerDamageDone();
+                    yield return new WaitForSeconds(DmgCalcTime);
+                    DmgDoneTxt.text = " ";
+
+                }
+                else
+                {
+                    
+                }
+
+
+            }
+
+            if (PlayerClass == 3) // 
+            {
+                CriticalHitClac();
+                ClassBuffNerf();
+
+                PersistentManagerScript.Instance.PlayerMana -= 10;
+                if (BurnEffect == 0)
+                {
+                    BurnEffect += 4;
+                }
+
+
+                if (INTBuff >= EnCon)
+                {
+                    DmgCalc = EnHealth;
+                    EnHealth -= INTBuff - EnCon;
+                    PlayerDamageDone();
+                    yield return new WaitForSeconds(DmgCalcTime);
+                    DmgDoneTxt.text = " ";
+
+                }
+                else
+                {
+                    
+                }
+
+
+            }
+
+            yield return new WaitForSeconds(TurnEndTime);
+            {
+                PersistentManagerScript.Instance.EnemyTurn = true;
+
+            }
+        }
+
+
+    }
 
     IEnumerator PlayerSuperAttack() ///SUPER ATTACK ///////////////////////////////////////////////////////////////////////////////
     {
@@ -410,7 +595,7 @@ public class EnemyClass1AttDef : MonoBehaviour
                 CriticalHitClac();
                 ClassBuffNerf();
                 StunEffect += 1;///Check made in EnemyBasicAttack if true
-                NoStatusEffect = STR;
+                NoConfusionEffect = STR;
                 STR = 15; // ATTACK   
                 PersistentManagerScript.Instance.PlayerMana -= 15;
 
@@ -426,11 +611,11 @@ public class EnemyClass1AttDef : MonoBehaviour
                 else
                 {
 
-                    Debug.Log("No Damage");
+                    
                 }
 
                 
-                STR = NoStatusEffect; // ATTACK RESET VALUE                          
+                STR = NoConfusionEffect; // ATTACK RESET VALUE                          
 
             }
 
@@ -461,7 +646,7 @@ public class EnemyClass1AttDef : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("No Damage");
+                    
                 }
 
 
@@ -489,7 +674,7 @@ public class EnemyClass1AttDef : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("No Damage");
+                    
                 }
 
 
@@ -535,7 +720,7 @@ public class EnemyClass1AttDef : MonoBehaviour
                 else
                 {
 
-                    Debug.Log("No Damage");
+                    
                 }
 
 
@@ -559,7 +744,7 @@ public class EnemyClass1AttDef : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("No Damage");
+                    
                 }
 
 
@@ -581,7 +766,7 @@ public class EnemyClass1AttDef : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("No Damage");
+                    
                 }
 
 
@@ -615,163 +800,221 @@ public class EnemyClass1AttDef : MonoBehaviour
             EnInt = (EnInt / 4) * 3;
         }
 
-        
         if (StunEffect == 0) // CHECK CLASS1 SUPER ATTACK STATUS EFFECTS
         {
-            
-            
-                if (EnHealth >= 0)
-                {
-                    yield return new WaitForSeconds(TurnStartTime);
-
-                    ClassBuffNerf();
-
-                    if (PoisonEffect >= 1)
-                    {
-                        //KeepValue = EnHealth;
-                        EnHealth -= 5;
-                        PoisonEffect -= 1;
-
-                    }
-                    NoStatusEffect = EnCon;
-                    if (ConfusionEffect >= 1)
-                    {
-
-                    NoStatusEffect = EnCon;
-                    EnCon -= 5;
-                    ConfusionEffect -= 1;
-
-                    }
-
-                    if (PlayerClass == 1)
-                    {
-
-                        {
-                            if (EnStr >= CON)
-                            {
-                                DmgCalc = PlayerHealth;
-                                PlayerHealth -= EnStr - CON;
-                                PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
-                                PlayerDamageTaken();
-                                yield return new WaitForSeconds(DmgCalcTime);
-                                DmgTakenTxt.text = " ";
-
-                            }
-                            if (CON >= EnStr)
-                            {
-                                DmgCalc = PlayerHealth;
-                                PlayerHealth -= 1;
-                                PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
-                                PlayerDamageTaken();
-                                yield return new WaitForSeconds(DmgCalcTime);
-                                DmgTakenTxt.text = " ";
-                            }
-
-                        }
-                    }
-
-                    if (PlayerClass == 2)
-                    {
-
-
-                        if (EnStrBuff >= CON)
-                        {
-                            DmgCalc = PlayerHealth;
-                            PlayerHealth -= EnStrBuff - CON;
-                            PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
-                            PlayerDamageTaken();
-                            yield return new WaitForSeconds(DmgCalcTime);
-                            DmgTakenTxt.text = " ";
-                        }
-                        if (CON >= EnStrBuff)
-                        {
-                            DmgCalc = PlayerHealth;
-                            PlayerHealth -= 1;
-                            PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
-                            PlayerDamageTaken();
-                            yield return new WaitForSeconds(DmgCalcTime);
-                            DmgTakenTxt.text = " ";
-                        }
-
-
-                    }
-
-                    if (PlayerClass == 3)
-                    {
-
-
-                        if (EnStrNerf >= CON)
-                        {
-                            DmgCalc = PlayerHealth;
-                            PlayerHealth -= EnStrNerf - CON;
-                            PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
-                            PlayerDamageTaken();
-                            yield return new WaitForSeconds(DmgCalcTime);
-                            DmgTakenTxt.text = " ";
-                        }
-                        if (CON >= EnStrBuff)
-                        {
-                            DmgCalc = PlayerHealth;
-                            PlayerHealth -= 1;
-                            PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
-                            PlayerDamageTaken();
-                            yield return new WaitForSeconds(DmgCalcTime);
-                            DmgTakenTxt.text = " ";
-                        }
-
-
-                    }
-                
-                EnCon = NoStatusEffect;
-
-            }
-            
-            
-
-            
-        }
-        else //Return Stun status effect 
-        {
-            //PersistentManagerScript.Instance.PlayerMana -= 15;
-            StunEffect = 0;
-
-        }
-
-        
-
-
-        if (PlayerDefUP == true)
-        {
-            EnStr = KeepEnStr;
-            EnDex = KeepEnDex;
-            EnInt = KeepEnInt;
-
-            DmgCalc = EnHealth;
-
-            if (PlayerClass == 1) // Player1 Defense skill counter attack 50%/STR
+            if (EnHealth >= 0)
             {
-                if ((STR / 2) >= EnCon)
+                yield return new WaitForSeconds(TurnStartTime);
+                
+                ClassBuffNerf();
+                
+                if (WeakenEffect == 4)
+                {
+                    WeakEnStr = EnStr;
+                    WeakEnDex = EnDex;
+                    WeakEnInt = EnInt;
+
+
+
+                    EnStr = EnStr - 4;
+                    EnDex = EnDex - 4;
+                    EnInt = EnInt - 4;
+                    //WeakenEffect -= 1;
+
+
+                }
+                if (PoisonEffect >= 1)
+                {
+                    PoisonEffect -= 1;
+                    PersistentManagerScript.Instance.PoisonActive = true;
+                }
+                else
+                {
+                    PersistentManagerScript.Instance.PoisonActive = false;
+                }
+                if (ConfusionEffect >= 1)
+                {
+                        ConfusionEffectCon = EnCon;
+                        //NoStatusEffect = EnCon;
+                        EnCon -= 5;
+                    PersistentManagerScript.Instance.ConfusionActive = true;
+                }
+                
+                if (SlowEffect >= 2)
                 {
 
-                    EnHealth -= (STR / 2) - EnCon;
+                    
+                    SlowEffect -= 1;
+                    PersistentManagerScript.Instance.SlowActive = true;
+                }
+
+
+                if (BurnEffect >= 1)
+                {
+                    EnHealth -= 5;
+                    BurnEffect -= 1;
+                    PersistentManagerScript.Instance.BurnActive = true;
+                }
+                else
+                {
+                    PersistentManagerScript.Instance.BurnActive = false;
+                }
+
+                if (PlayerClass == 1)
+                {
+
+                    {
+                        if (EnStr >= CON)
+                        {
+                            DmgCalc = PlayerHealth;
+                            PlayerHealth -= EnStr - CON;
+                            PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                            PlayerDamageTaken();
+                            yield return new WaitForSeconds(DmgCalcTime);
+                            DmgTakenTxt.text = " ";
+
+                        }
+                        if (CON >= EnStr)
+                        {
+                            DmgCalc = PlayerHealth;
+                            PlayerHealth -= 1;
+                            PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                            PlayerDamageTaken();
+                            yield return new WaitForSeconds(DmgCalcTime);
+                            DmgTakenTxt.text = " ";
+                        }
+
+                    }
+                }
+
+                if (PlayerClass == 2)
+                {
+
+
+                    if (EnStrBuff >= CON)
+                    {
+                        DmgCalc = PlayerHealth;
+                        PlayerHealth -= EnStrBuff - CON;
+                        PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                        PlayerDamageTaken();
+                        yield return new WaitForSeconds(DmgCalcTime);
+                        DmgTakenTxt.text = " ";
+                    }
+                    if (CON >= EnStrBuff)
+                    {
+                        DmgCalc = PlayerHealth;
+                        PlayerHealth -= 1;
+                        PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                        PlayerDamageTaken();
+                        yield return new WaitForSeconds(DmgCalcTime);
+                        DmgTakenTxt.text = " ";
+                    }
 
 
                 }
 
-                PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
-                DmgDoneTxt.text = " ";
-                PlayerDamageDone();
-                yield return new WaitForSeconds(DmgCalcTime);
-                DmgDoneTxt.text = " ";
+                if (PlayerClass == 3)
+                {
 
+
+                    if (EnStrNerf >= CON)
+                    {
+                        DmgCalc = PlayerHealth;
+                        PlayerHealth -= EnStrNerf - CON;
+                        PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                        PlayerDamageTaken();
+                        yield return new WaitForSeconds(DmgCalcTime);
+                        DmgTakenTxt.text = " ";
+                    }
+                    if (CON >= EnStrBuff)
+                    {
+                        DmgCalc = PlayerHealth;
+                        PlayerHealth -= 1;
+                        PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                        PlayerDamageTaken();
+                        yield return new WaitForSeconds(DmgCalcTime);
+                        DmgTakenTxt.text = " ";
+                    }
+
+                ///RETURN STATUS EFFECTS HERE ///////////
+                }
+
+                if (ConfusionEffect >= 1)
+                {
+                    //ConfusionEffectCon = EnCon;
+                    //NoStatusEffect = EnCon;
+                    //EnCon -= 5;
+                    ConfusionEffect -= 1;
+                    EnCon = ConfusionEffectCon;
+                }
+                
+
+                if (WeakenEffect >= 1)
+                {
+                    WeakenEffect -= 1;
+                    PersistentManagerScript.Instance.WeakenActive = true;
+                }
+
+                    if (WeakenEffect == 1)
+                    {
+                    EnStr = WeakEnStr;
+                    EnDex = WeakEnDex;
+                    EnInt = WeakEnInt;
+                    //EnAgi = WeakEnAgi;
+                    }
+
+                if (SlowEffect == 1)
+                {
+                    EnAgi += 5;
+                    SlowEffect = 0;
+                    PersistentManagerScript.Instance.SlowActive = false;
+                }
+                // BurnEffect = No need stuff here
+                // StunEffect = else command down below
 
             }
 
-            PlayerDefUP = false;
-            PersistentManagerScript.Instance.BasicDefense = false;
+
+        }
+        else //Return Stun status effect 
+        {
+
+            PersistentManagerScript.Instance.StunActive = true;
+            StunEffect = 0;
+
         }
 
 
+        if (PlayerDefUP == true)
+            {
+                EnStr = KeepEnStr;
+                EnDex = KeepEnDex;
+                EnInt = KeepEnInt;
+
+                DmgCalc = EnHealth;
+
+                if (PlayerClass == 1) // Player1 Defense skill counter attack 50%/STR
+                {
+                    if ((STR / 2) >= EnCon)
+                    {
+
+                        EnHealth -= (STR / 2) - EnCon;
+
+
+                    }
+
+                    PersistentManagerScript.Instance.PlayerHealth = PlayerHealth;
+                    DmgDoneTxt.text = " ";
+                    PlayerDamageDone();
+                    yield return new WaitForSeconds(DmgCalcTime);
+                    DmgDoneTxt.text = " ";
+
+
+                }
+
+                PlayerDefUP = false;
+                PersistentManagerScript.Instance.BasicDefense = false;
+            }
 
 
 

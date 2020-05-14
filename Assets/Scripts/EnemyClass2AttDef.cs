@@ -38,8 +38,23 @@ public class EnemyClass2AttDef : MonoBehaviour
     int KeepEnStr; // Holds enemy stats for status effects
     int KeepEnDex;
     int KeepEnInt;
+    int KeepEnAgi;
+
+    int WeakEnStr; // Holds enemy stats in Weakness status effect
+    int WeakEnDex;
+    int WeakEnInt;
+    int WeakEnAgi;
+
+    int SlowEnAgi;
+    //bool SlowEnAgiTrue = false;
+
+    // Hold basic value when status effects active
+    //int NoStatusEffect;
+    int NoConfusionEffect;
+    int ConfusionEffectCon;
+
     // Neutral status effects
-    int NoStatusEffect;
+    int NoStatusEffect; //DELETE
 
     int STRBuff, STRNerf, DEXBuff, DEXNerf, INTBuff, INTNerf; // Stats buff/nerf when attacking different Class foe
 
@@ -50,6 +65,7 @@ public class EnemyClass2AttDef : MonoBehaviour
     public Text DmgDoneTxt;
     public Text DmgTakenTxt;
 
+    public bool DoubleDmg = false;
     //private bool CollisionCheck = false; // testausta
 
     public GameObject myParentObject;
@@ -76,6 +92,9 @@ public class EnemyClass2AttDef : MonoBehaviour
     public int StunEffect = 0;
     public int PoisonEffect = 0;
     public int ConfusionEffect = 0;
+    public int WeakenEffect = 0;
+    public int SlowEffect = 0;
+    public int BurnEffect = 0;
 
 
     void Start()
@@ -156,14 +175,6 @@ public class EnemyClass2AttDef : MonoBehaviour
 
     void DrawEnStatsOnce()
     {
-        EnStrTxt.text = EnStr.ToString();
-        EnStrTxt.text = "Str      " + EnStrTxt.text;
-
-        EnConTxt.text = EnCon.ToString();
-        EnConTxt.text = "Con     " + EnConTxt.text;
-
-        EnAgiTxt.text = EnAgi.ToString();
-        EnAgiTxt.text = "Agi      " + EnAgiTxt.text;
 
         EnDexTxt.text = EnDex.ToString();
         EnDexTxt.text = "Dex     " + EnDexTxt.text;
@@ -181,6 +192,15 @@ public class EnemyClass2AttDef : MonoBehaviour
 
     void DrawEnStatsUpdate()
     {
+        EnStrTxt.text = EnStr.ToString();
+        EnStrTxt.text = "Str      " + EnStrTxt.text;
+
+        EnConTxt.text = EnCon.ToString();
+        EnConTxt.text = "Con     " + EnConTxt.text;
+
+        EnAgiTxt.text = EnAgi.ToString();
+        EnAgiTxt.text = "Agi      " + EnAgiTxt.text;
+
         EnHealthTxt.text = EnHealth.ToString();
         EnHealthTxt.text = "HP      " + EnHealthTxt.text;
 
@@ -191,12 +211,23 @@ public class EnemyClass2AttDef : MonoBehaviour
 
     void PlayerDamageDone()
     {
-        DmgCalc -= EnHealth;
+        if (DoubleDmg == true)
+        {
+            DmgCalc -= EnHealth;
 
-        DmgDoneTxt.text = DmgCalc.ToString();
-        DmgDoneTxt.text = "-" + DmgDoneTxt.text;
+            DmgDoneTxt.text = DmgCalc.ToString();
+            DmgDoneTxt.text = "2x";
 
 
+        }
+        else
+        {
+            DmgCalc -= EnHealth;
+
+            DmgDoneTxt.text = DmgCalc.ToString();
+            DmgDoneTxt.text = "-" + DmgDoneTxt.text;
+
+        }
     }
 
     void PlayerDamageTaken()
@@ -225,12 +256,31 @@ public class EnemyClass2AttDef : MonoBehaviour
             if (PersistentManagerScript.Instance.BasicAttack == true)
             {
                 PersistentManagerScript.Instance.BasicAttack = false;
-                GetPlayerStats();
-                StartCoroutine(PlayerBasicAttack());
+                //GetPlayerStats();
+                //StartCoroutine(PlayerBasicAttack());
+
+                if (AGI / 2 >= EnAgi)
+                {
+
+                    GetPlayerStats();
+                    DoubleDmg = true;
+                    PlayerDamageDone();
+                    StartCoroutine(PlayerBasicAttack());
+
+                    StartCoroutine(PlayerBasicAttack());
+
+                    DoubleDmg = false;
+                }
+                else //if (AGI / 2 <= EnAgi)
+                {
+                    GetPlayerStats();
+                    StartCoroutine(PlayerBasicAttack());
+                }
 
                 PersistentManagerScript.Instance.PlayerTurn = false;
             }
         }
+
 
         //SUPER ATTACK
         if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.SuperAttack == true)
@@ -243,6 +293,20 @@ public class EnemyClass2AttDef : MonoBehaviour
 
                 PersistentManagerScript.Instance.PlayerTurn = false;
             }
+        }
+
+        //ULTRA ATTACK
+        if (PersistentManagerScript.Instance.PlayerTurn == true && PersistentManagerScript.Instance.UltraAttack == true)
+        {
+            if (PersistentManagerScript.Instance.UltraAttack == true)
+            {
+                PersistentManagerScript.Instance.UltraAttack = false;
+                GetPlayerStats();
+                StartCoroutine(PlayerUltraAttack());
+
+                PersistentManagerScript.Instance.PlayerTurn = false;
+            }
+
         }
 
         //DEFENSE
@@ -371,6 +435,131 @@ public class EnemyClass2AttDef : MonoBehaviour
         }
 
     }
+
+    IEnumerator PlayerUltraAttack() //CLASS1 STATS
+    {
+        if (EnHealth >= 0 && PersistentManagerScript.Instance.EnemyTurn == false)
+        {
+            PersistentManagerScript.Instance.StartRandomCrit = true;
+
+
+            yield return new WaitForSeconds(TurnStartTime);
+
+
+
+            if (PlayerClass == 1) // Ultra Attack from Class1 -> ///Cost-20 MP
+            {
+
+                CriticalHitClac();
+                ClassBuffNerf();
+                //ConfusionEffect += 1;
+                if (WeakenEffect == 0)
+                {
+                    WeakenEffect += 4;
+                }
+
+                //NoConfusionEffect = STR;
+                //STR = 20; // ATTACK   
+                PersistentManagerScript.Instance.PlayerMana -= 20;
+
+                if (STRNerf >= EnCon)
+                {
+                    DmgCalc = EnHealth;
+                    EnHealth -= STRNerf - EnCon;
+
+                    PlayerDamageDone();
+                    yield return new WaitForSeconds(DmgCalcTime);
+                    DmgDoneTxt.text = " ";
+                }
+                else
+                {
+
+
+                }
+
+
+                //STR = NoConfusionEffect; // ATTACK RESET VALUE                          
+
+            }
+
+            if (PlayerClass == 2) // 
+            {
+                if (SlowEffect == 0)
+                {
+                    SlowEffect += 4;
+                    EnAgi -= 5;
+
+                    SlowEnAgi = EnAgi;
+                }
+                PersistentManagerScript.Instance.PlayerMana -= 20;
+
+
+                CriticalHitClac();
+                ClassBuffNerf();
+
+
+
+                if (DEX >= EnCon)
+                {
+                    var DexUltra = 5;
+
+
+                    DmgCalc = EnHealth;
+                    //EnHealth -= DEXNerf - EnCon;
+                    EnHealth -= (DexUltra + DEX) - EnCon;
+                    PlayerDamageDone();
+                    yield return new WaitForSeconds(DmgCalcTime);
+                    DmgDoneTxt.text = " ";
+
+                }
+                else
+                {
+
+                }
+
+
+            }
+
+            if (PlayerClass == 3) // Super Attack from Class3 -> makes 10dmg/confusion effect //Cost-10MP
+            {
+                CriticalHitClac();
+                ClassBuffNerf();
+
+                PersistentManagerScript.Instance.PlayerMana -= 10;
+                if (BurnEffect == 0)
+                {
+                    BurnEffect += 4;
+                }
+
+
+                if (INTNerf >= EnCon)
+                {
+                    DmgCalc = EnHealth;
+                    EnHealth -= INTNerf - EnCon;
+                    PlayerDamageDone();
+                    yield return new WaitForSeconds(DmgCalcTime);
+                    DmgDoneTxt.text = " ";
+
+                }
+                else
+                {
+
+                }
+
+
+            }
+
+            yield return new WaitForSeconds(TurnEndTime);
+            {
+                PersistentManagerScript.Instance.EnemyTurn = true;
+
+            }
+        }
+
+
+    }
+
+
     IEnumerator PlayerSuperAttack() ///////////////////////////////////
 
     {
@@ -600,21 +789,58 @@ public class EnemyClass2AttDef : MonoBehaviour
 
                 ClassBuffNerf();
 
-                if (PoisonEffect >= 1)
+                if (WeakenEffect == 4)
                 {
-                    //KeepValue = EnHealth;
-                    EnHealth -= 5;
-                    PoisonEffect -= 1;
+                    WeakEnStr = EnStr;
+                    WeakEnDex = EnDex;
+                    WeakEnInt = EnInt;
+
+
+
+                    EnStr = EnStr - 4;
+                    EnDex = EnDex - 4;
+                    EnInt = EnInt - 4;
+                    //WeakenEffect -= 1;
+
 
                 }
-                NoStatusEffect = EnCon;
+
+                if (PoisonEffect >= 1)
+                {
+                    PoisonEffect -= 1;
+                    PersistentManagerScript.Instance.PoisonActive = true;
+                }
+                else
+                {
+                    PersistentManagerScript.Instance.PoisonActive = false;
+                }
+                
                 if (ConfusionEffect >= 1)
                 {
-
-                    NoStatusEffect = EnCon;
+                    ConfusionEffectCon = EnCon;
+                    //NoStatusEffect = EnCon;
                     EnCon -= 5;
-                    ConfusionEffect -= 1;
+                    PersistentManagerScript.Instance.ConfusionActive = true;
+                }
 
+                if (SlowEffect >= 2)
+                {
+
+
+                    SlowEffect -= 1;
+                    PersistentManagerScript.Instance.SlowActive = true;
+                }
+
+
+                if (BurnEffect >= 1)
+                {
+                    EnHealth -= 5;
+                    BurnEffect -= 1;
+                    PersistentManagerScript.Instance.BurnActive = true;
+                }
+                else
+                {
+                    PersistentManagerScript.Instance.BurnActive = false;
                 }
 
                 if (PlayerClass == 1)
@@ -695,13 +921,46 @@ public class EnemyClass2AttDef : MonoBehaviour
                     }
 
                 }
-                EnCon = NoStatusEffect;
+                ///RETURN STATUS EFFECTS HERE ///////////
+                if (ConfusionEffect >= 1)
+                {
+                    //ConfusionEffectCon = EnCon;
+                    //NoStatusEffect = EnCon;
+                    //EnCon -= 5;
+                    ConfusionEffect -= 1;
+                    EnCon = ConfusionEffectCon;
+                }
+
+
+                if (WeakenEffect >= 1)
+                {
+                    WeakenEffect -= 1;
+                    PersistentManagerScript.Instance.WeakenActive = true;
+                }
+
+                if (WeakenEffect == 1)
+                {
+                    EnStr = WeakEnStr;
+                    EnDex = WeakEnDex;
+                    EnInt = WeakEnInt;
+                    //EnAgi = WeakEnAgi;
+                }
+
+                if (SlowEffect == 1)
+                {
+                    EnAgi += 5;
+                    SlowEffect = 0;
+                    PersistentManagerScript.Instance.SlowActive = false;
+                }
+                // BurnEffect = No need stuff here
+                // StunEffect = else command down below
+
             }
 
         }
         else //Return Stun status effect 
         {
-            //PersistentManagerScript.Instance.PlayerMana -= 15;
+            PersistentManagerScript.Instance.StunActive = true;
             StunEffect = 0;
 
         }

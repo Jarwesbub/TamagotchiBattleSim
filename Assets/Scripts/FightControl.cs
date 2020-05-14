@@ -107,6 +107,44 @@ public class FightControl : MonoBehaviour
 
     }
 
+    public void MakeUltrattack() //NEW
+    {
+        if (FightWait == false && PersistentManagerScript.Instance.PlayerTurn == true)
+        {
+            if (PersistentManagerScript.Instance.PlayerClass == 1 && PersistentManagerScript.Instance.PlayerMana >= 20)
+            {
+                PersistentManagerScript.Instance.PlayerTurn = true;
+                PersistentManagerScript.Instance.UltraAttack = true;
+
+                FightWait = true;
+
+                StartCoroutine(FightWaitButtonPress());
+            }
+
+            if (PersistentManagerScript.Instance.PlayerClass == 2 && PersistentManagerScript.Instance.PlayerMana >= 20)
+            {
+                PersistentManagerScript.Instance.PlayerTurn = true;
+                PersistentManagerScript.Instance.UltraAttack = true;
+
+                FightWait = true;
+
+                StartCoroutine(FightWaitButtonPress());
+            }
+
+            if (PersistentManagerScript.Instance.PlayerClass == 3 && PersistentManagerScript.Instance.PlayerMana >= 20)
+            {
+                PersistentManagerScript.Instance.PlayerTurn = true;
+                PersistentManagerScript.Instance.UltraAttack = true;
+
+                FightWait = true;
+
+                StartCoroutine(FightWaitButtonPress());
+            }
+        }
+
+    }
+
+
     public void MakeBasicDefense()
     {
         /*
