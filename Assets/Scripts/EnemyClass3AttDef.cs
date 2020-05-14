@@ -616,15 +616,16 @@ public class EnemyClass3AttDef : MonoBehaviour
 
             if (PlayerClass == 2) // Super Attack from Class2 -> makes 10 dmg/ poison damage ///Cost-10 MP
             {
-                if (PoisonEffect == 0)
-                {
-                    PersistentManagerScript.Instance.PlayerMana -= 10;
-                    PoisonEffect += 2;
-                }
+                //if (PoisonEffect == 0)                                                
+
+                PersistentManagerScript.Instance.PlayerMana -= 10;
+                PoisonEffect += 2;
+                /*
                 else if (PoisonEffect == 1)
                 {
-                    PoisonEffect += 1;
+                PoisonEffect += 1;
                 }
+                */
 
                 CriticalHitClac();
                 ClassBuffNerf();
