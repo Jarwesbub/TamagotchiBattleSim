@@ -34,7 +34,7 @@ public class StatusEffects : MonoBehaviour
         PersistentManagerScript.Instance.StunActive = false;
         //PersistentManagerScript.Instance.PoisonActive = false;
         PersistentManagerScript.Instance.ConfusionActive = false;
-        PersistentManagerScript.Instance.WeakenActive = false;
+        //PersistentManagerScript.Instance.WeakenActive = false;
         //PersistentManagerScript.Instance.SlowActive = false;
         //PersistentManagerScript.Instance.BurnActive = false;
 
@@ -45,6 +45,23 @@ public class StatusEffects : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PersistentManagerScript.Instance.XPScreen == 1)
+        {
+            PersistentManagerScript.Instance.StunActive = false;
+            PersistentManagerScript.Instance.PoisonActive = false;
+            PersistentManagerScript.Instance.ConfusionActive = false;
+            PersistentManagerScript.Instance.WeakenActive = false;
+            PersistentManagerScript.Instance.SlowActive = false;
+            PersistentManagerScript.Instance.BurnActive = false;
+
+
+
+
+
+        }
+
+
+
         if (PersistentManagerScript.Instance.StunActive == true)
         {
             StunEff.SetActive(true);
@@ -82,7 +99,7 @@ public class StatusEffects : MonoBehaviour
         if (PersistentManagerScript.Instance.WeakenActive == true)
         {
             WeakenEff.SetActive(true);
-            StartCoroutine(Wait());
+            //StartCoroutine(Wait());
 
         }
         else

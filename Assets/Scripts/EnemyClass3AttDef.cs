@@ -160,10 +160,19 @@ public class EnemyClass3AttDef : MonoBehaviour
         EnIntNerf = EnInt - (EnInt / 4);
 
     }
-
+    void RestoreStatusEffect()
+    {
+    StunEffect = 0;
+    PoisonEffect = 0;
+    ConfusionEffect = 0;
+    WeakenEffect = 0;
+    SlowEffect = 0;
+    BurnEffect = 0;
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        RestoreStatusEffect();
         GetComponent<SpriteRenderer>().enabled = true; //Makes object visible
         GetComponent<Animator>().enabled = true;
         GetPlayerStats();
@@ -177,12 +186,6 @@ public class EnemyClass3AttDef : MonoBehaviour
     }
     void DrawEnStatsOnce()
     {
-
-        EnDexTxt.text = EnDex.ToString();
-        EnDexTxt.text = "Dex     " + EnDexTxt.text;
-
-        EnIntTxt.text = EnCon.ToString();
-        EnIntTxt.text = "Int       " + EnIntTxt.text;
 
         EnLVL = PersistentManagerScript.Instance.Lvl;
 
@@ -199,6 +202,12 @@ public class EnemyClass3AttDef : MonoBehaviour
 
         EnConTxt.text = EnCon.ToString();
         EnConTxt.text = "Con     " + EnConTxt.text;
+
+        EnDexTxt.text = EnDex.ToString();
+        EnDexTxt.text = "Dex     " + EnDexTxt.text;
+
+        EnIntTxt.text = EnInt.ToString();
+        EnIntTxt.text = "Int       " + EnIntTxt.text;
 
         EnAgiTxt.text = EnAgi.ToString();
         EnAgiTxt.text = "Agi      " + EnAgiTxt.text;
@@ -799,12 +808,17 @@ public class EnemyClass3AttDef : MonoBehaviour
                     WeakEnStr = EnStr;
                     WeakEnDex = EnDex;
                     WeakEnInt = EnInt;
+                    /*
+                    EnStr -= 4;
+                    EnDex -= 4;
+                    EnInt -= 4;
+                    */
+                    EnStr -= (EnStr / 4);
+                    EnDex -= (EnDex / 4);
+                    EnInt -= (EnInt / 4);
 
-
-
-                    EnStr = EnStr - 4;
-                    EnDex = EnDex - 4;
-                    EnInt = EnInt - 4;
+                    EnIntNerf -= (EnIntNerf / 4);
+                    EnIntBuff -= (EnIntBuff / 4);
                     //WeakenEffect -= 1;
 
 
@@ -948,6 +962,12 @@ public class EnemyClass3AttDef : MonoBehaviour
                 EnDex = WeakEnDex;
                 EnInt = WeakEnInt;
                 //EnAgi = WeakEnAgi;
+                WeakenEffect = 0;
+                PersistentManagerScript.Instance.WeakenActive = false;
+            }
+            if (WeakenEffect <= 1)
+            {
+                PersistentManagerScript.Instance.WeakenActive = false;
             }
 
             if (SlowEffect == 1)
