@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ParticleSystemScript : MonoBehaviour
 {
+    public GameObject ParticleEffects;
     public GameObject BurnAttack;
     public GameObject BurnStay;
     public GameObject PoisonAttack;
@@ -22,6 +23,15 @@ public class ParticleSystemScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PersistentManagerScript.Instance.FightScreen == true)
+        {
+            ParticleEffects.SetActive(true);
+        }
+        else
+        {
+            ParticleEffects.SetActive(false);
+        }
+
         if (PersistentManagerScript.Instance.UltraAttack == true && PersistentManagerScript.Instance.PlayerClass == 3)
         {
             BurnAttack.GetComponent<ParticleSystem>().Play();

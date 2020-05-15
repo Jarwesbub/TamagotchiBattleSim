@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - TileMapLayer1
-  - 
-  - 
-  - 
+  - TileMapLayerFarBack
+  - TileMapLayerBack
+  - TileMapLayerFront
+  - TileMapLayerFarFront
   - 
   - 
   - 

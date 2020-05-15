@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: TestTiles
+  m_Name: oasis_tumbleweedtiles
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 7b7427e813f152e438b8a4fa0d22a007, type: 3}
-  m_Color: {r: 0.49056602, g: 0.46384048, b: 0.44197223, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 5ffc388f4f3493f4fb9834c535efa94b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0

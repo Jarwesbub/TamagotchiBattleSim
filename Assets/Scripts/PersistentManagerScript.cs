@@ -48,6 +48,9 @@ public class PersistentManagerScript : MonoBehaviour
     public bool SlowActive;
     public bool BurnActive;
 
+    public int WorldMapPos; // 1 = Home, 2 = Grass, 3 = Oasis, 4 = Tundra, 5 = Volcanic
+    public int MapChange = 0;
+
     private void Awake()
     {
        
@@ -110,11 +113,6 @@ public class PersistentManagerScript : MonoBehaviour
         StartRandomCrit = false;
 
     }
-
-
-
-
-
 
     public void StatsChecker() // Not in use atm
     {
